@@ -28,9 +28,7 @@ export default function Register() {
     uf: Yup.string().max(2).required(''),
   });
 
-  async function handleRegister(e) {
-    e.preventDefault();
-
+  async function handleRegister() {
     const data = {
       name,
       email,
