@@ -1,5 +1,6 @@
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { Image, FlatList } from 'react-native';
 
 import logoImg from '../../assets/logo.png';
@@ -20,6 +21,12 @@ import {
 } from './styles';
 
 export default function Incidents() {
+  const navigation = useNavigation();
+
+  function navigateToDetail() {
+    navigation.navigate('Detail');
+  }
+
   return (
     <Container>
       <Header>
@@ -48,7 +55,7 @@ export default function Incidents() {
               <IncidentText>VALOR:</IncidentText>
               <IncidentValue>R$ 120,00</IncidentValue>
 
-              <DetailsButton onPress={() => {}}>
+              <DetailsButton onPress={navigateToDetail}>
                 <DetailsButtonText>Ver mais detalhes</DetailsButtonText>
                 <Feather name="arrow-right" size={16} color="#e02041" />
               </DetailsButton>
