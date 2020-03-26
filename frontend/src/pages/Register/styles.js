@@ -27,6 +27,12 @@ export const Content = styled.div`
     width: 100%;
     max-width: 380px;
 
+    h2 {
+      margin-top: 10px;
+      color: #737380;
+      font-size: 10px;
+    }
+
     a {
       display: flex;
       align-items: center;
@@ -56,6 +62,13 @@ export const Content = styled.div`
   form {
     width: 100%;
     max-width: 450px;
+
+    span {
+      padding: 5px;
+      color: #e02041;
+      opacity: 0.6;
+      align-self: flex-start;
+    }
 
     input {
       margin-top: 8px;

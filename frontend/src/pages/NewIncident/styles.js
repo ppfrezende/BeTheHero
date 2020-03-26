@@ -57,6 +57,13 @@ export const Content = styled.div`
     width: 100%;
     max-width: 450px;
 
+    span {
+      padding: 5px;
+      color: #e02041;
+      opacity: 0.6;
+      align-self: flex-start;
+    }
+
     input {
       margin-top: 8px;
     }

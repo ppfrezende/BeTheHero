@@ -20,6 +20,13 @@ export const Content = styled.section`
   form {
     margin-top: 100px;
 
+    span {
+      padding: 5px;
+      color: #e02041;
+      opacity: 0.6;
+      align-self: flex-start;
+    }
+
     h1 {
       font-size: 32px;
       margin-bottom: 32px;

@@ -70,8 +70,10 @@ export default function Profile() {
             <strong>CASO:</strong>
             <p>{incident.title}</p>
 
-            <strong>DESCRIÇÃO::</strong>
-            <p>{incident.description}</p>
+            <strong>DESCRIÇÃO:</strong>
+            <p>
+              {!incident.description ? 'Sem descrição' : incident.description}
+            </p>
 
             <strong>VALOR:</strong>
             <h1>

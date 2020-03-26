@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+import { Form, Input } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -8,6 +10,11 @@ import api from '../../services/api';
 import logoImg from '../../assets/logo.svg';
 
 import { Container, Content } from './styles';
+
+const schema = Yup.object().shape({
+  title: Yup.string().required('O nome da caso é obrigatório.'),
+  value: Yup.string().required('O valor é obrigatório.'),
+});
 
 export default function NewIncident() {
   const [title, setTitle] = useState('');
@@ -18,9 +25,7 @@ export default function NewIncident() {
 
   const history = useHistory();
 
-  async function handleNewIncident(e) {
-    e.preventDefault();
-
+  async function handleNewIncident() {
     const data = {
       title,
       description,
@@ -58,25 +63,27 @@ export default function NewIncident() {
           </Link>
         </section>
 
-        <form onSubmit={handleNewIncident}>
-          <input
+        <Form schema={schema} onSubmit={handleNewIncident}>
+          <Input
+            name="title"
             placeholder="Título do caso"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
-            placeholder="Descrição"
+            placeholder="É sempre bom escrever uma descrição do seu caso."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <input
+          <Input
+            name="value"
             placeholder="Valor em reais"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
 
           <button type="submit">Cadastrar</button>
-        </form>
+        </Form>
       </Content>
     </Container>
   );
