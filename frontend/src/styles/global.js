@@ -29,4 +29,17 @@ export default createGlobalStyle`
     padding: 0 24px;
     font-size: 12px;
   }
+
+  textarea {
+    width: 100%;
+    resize: vertical;
+    margin-top: 8px;
+    min-height: 140px;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 12px;
+    line-height: 24px;
+  }
 `;
