@@ -8,7 +8,15 @@ import SessionController from './controllers/SessionController';
 
 const routes = new Router();
 
-routes.post('/sessions', SessionController.create);
+routes.post(
+  '/sessions',
+  celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      id: Joi.string().required(),
+    }),
+  }),
+  SessionController.create
+);
 
 routes.get('/ongs', OngController.index);
 routes.post(
