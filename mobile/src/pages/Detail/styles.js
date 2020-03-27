@@ -60,7 +60,7 @@ export const Actions = styled.View`
   justify-content: space-between;
 `;
 
-export const HandleButton = styled.View`
+export const HandleButton = styled.TouchableOpacity`
   background-color: #e02041;
   border-radius: 8px;
   height: 50px;

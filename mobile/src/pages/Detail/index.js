@@ -1,7 +1,10 @@
 import React from 'react';
+import { Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Image, TouchableOpacity } from 'react-native';
+
+import * as MailComposer from 'expo-mail-composer';
 
 import logoImg from '../../assets/logo.png';
 
@@ -21,9 +24,23 @@ import {
 
 export default function Detail() {
   const navigation = useNavigation();
+  const message =
+    'Olá APAE, estou entrando em contato pois gostaria de ajudar no caso "Cão Atropelado" no valor de R$ 120,00';
 
   function navigateBack() {
     navigation.goBack();
+  }
+
+  function sendMail() {
+    MailComposer.composeAsync({
+      subject: 'Herói do caso: Cão Atropelado',
+      recipients: ['rezendefellipe9@gmail.com'],
+      body: message,
+    });
+  }
+
+  function sendWhatsapp() {
+    Linking.openURL(`whatsapp://send?phone=5521976605854&text=${message}`);
   }
 
   return (
@@ -53,11 +70,11 @@ export default function Detail() {
         <HeroDescription>Entre em contato</HeroDescription>
 
         <Actions>
-          <HandleButton onPress={() => {}}>
+          <HandleButton onPress={sendWhatsapp}>
             <HandleButtonText>WhatsApp</HandleButtonText>
           </HandleButton>
 
-          <HandleButton onPress={() => {}}>
+          <HandleButton onPress={sendMail}>
             <HandleButtonText>E-mail</HandleButtonText>
           </HandleButton>
         </Actions>
