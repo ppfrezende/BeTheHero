@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Image, FlatList } from 'react-native';
+
+import api from '../../services/api';
 
 import logoImg from '../../assets/logo.png';
 
@@ -21,18 +23,32 @@ import {
 } from './styles';
 
 export default function Incidents() {
+  const [incidents, setIncidents] = useState([]);
+  const [totalIncidents, setTotalIncidents] = useState(0);
+
   const navigation = useNavigation();
 
-  function navigateToDetail() {
-    navigation.navigate('Detail');
+  function navigateToDetail(incident) {
+    navigation.navigate('Detail', { incident });
   }
+
+  async function loadIncidents() {
+    const response = await api.get('incidents');
+
+    setIncidents(response.data);
+    setTotalIncidents(response.headers['x-total-count']);
+  }
+
+  useEffect(() => {
+    loadIncidents();
+  }, []);
 
   return (
     <Container>
       <Header>
         <Image source={logoImg} />
         <HeaderText>
-          Total de <HeaderTextBold>0 casos</HeaderTextBold>
+          Total de <HeaderTextBold>{totalIncidents} casos</HeaderTextBold>
         </HeaderText>
       </Header>
 
@@ -41,21 +57,26 @@ export default function Incidents() {
 
       <IncidentList>
         <FlatList
-          data={[1, 2, 3]}
-          keyExtractor={incident => String(incident)}
+          data={incidents}
+          keyExtractor={(incident) => String(incident.id)}
           showsVerticalScrollIndicator={false}
-          renderItem={() => (
+          renderItem={({ item: incident }) => (
             <Incident>
               <IncidentText>ONG:</IncidentText>
-              <IncidentValue>APAE</IncidentValue>
+              <IncidentValue>{incident.name}</IncidentValue>
 
               <IncidentText>CASO:</IncidentText>
-              <IncidentValue>Cadelinha atropelada</IncidentValue>
+              <IncidentValue>{incident.title}</IncidentValue>
 
               <IncidentText>VALOR:</IncidentText>
-              <IncidentValue>R$ 120,00</IncidentValue>
+              <IncidentValue>
+                {Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(incident.value)}
+              </IncidentValue>
 
-              <DetailsButton onPress={navigateToDetail}>
+              <DetailsButton onPress={() => navigateToDetail(incident)}>
                 <DetailsButtonText>Ver mais detalhes</DetailsButtonText>
                 <Feather name="arrow-right" size={16} color="#e02041" />
               </DetailsButton>

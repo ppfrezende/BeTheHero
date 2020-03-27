@@ -38,6 +38,7 @@ export const Description = styled.Text`
 
 export const IncidentList = styled.View`
   margin-top: 32px;
+  max-height: 450px;
 `;
 
 export const Incident = styled.View`
