@@ -1,7 +1,7 @@
 import React from 'react';
 import { Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Image, TouchableOpacity } from 'react-native';
 
 import * as MailComposer from 'expo-mail-composer';
@@ -24,8 +24,18 @@ import {
 
 export default function Detail() {
   const navigation = useNavigation();
-  const message =
-    'Olá APAE, estou entrando em contato pois gostaria de ajudar no caso "Cão Atropelado" no valor de R$ 120,00';
+  const route = useRoute();
+
+  const incident = route.params.incident;
+
+  const message = `Olá ${
+    incident.name
+  }, estou entrando em contato pois gostaria de ajudar no caso "${
+    incident.title
+  }" no valor de ${Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(incident.value)}`;
 
   function navigateBack() {
     navigation.goBack();
@@ -33,8 +43,8 @@ export default function Detail() {
 
   function sendMail() {
     MailComposer.composeAsync({
-      subject: 'Herói do caso: Cão Atropelado',
-      recipients: ['rezendefellipe9@gmail.com'],
+      subject: `Herói do caso: ${incident.title}`,
+      recipients: [`${incident.email}`],
       body: message,
     });
   }
@@ -54,13 +64,20 @@ export default function Detail() {
 
       <Incident>
         <IncidentText>ONG:</IncidentText>
-        <IncidentValue>APAE</IncidentValue>
+        <IncidentValue>
+          {incident.name} de {incident.city}/{incident.uf}
+        </IncidentValue>
 
         <IncidentText>CASO:</IncidentText>
-        <IncidentValue>Cadelinha atropelada</IncidentValue>
+        <IncidentValue>{incident.title}</IncidentValue>
 
         <IncidentText>VALOR:</IncidentText>
-        <IncidentValue>R$ 120,00</IncidentValue>
+        <IncidentValue>
+          {Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(incident.value)}
+        </IncidentValue>
       </Incident>
 
       <ContactBox>
